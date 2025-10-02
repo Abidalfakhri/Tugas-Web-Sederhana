@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata & Jadwal Mahasiswa</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafc;
+            color: #222;
+        }
+        
+        nav {
+            position: sticky;
+            top: 0;
+            background: #0b69ff;
+            color: white;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav h2 {
+            margin: 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        nav ul li a:hover {
+            color: #ffea00;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #0b69ff;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            border-left: 5px solid #0b69ff;
+            padding-left: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .card img {
+            display: block;
+            margin: 15px auto;
+            border-radius: 10px;
+            border: 3px solid #0b69ff;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        /* Search */
+        
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        /* Jadwal Table */
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+            vertical-align: top;
+        }
+        
+        th {
+            background: #f2f6ff;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        td small {
+            display: block;
+            color: gray;
+            font-size: 12px;
+        }
+        
+        td strong {
+            color: #0b69ff;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #0b69ff;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <h2>Profil Mahasiswa</h2>
+        <ul>
+            <li><a href="#biodata">Biodata</a></li>
+            <li><a href="#perkenalan">Perkenalan</a></li>
+            <li><a href="#jadwal">Jadwal</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>BIODATA MAHASISWA</h1>
+
+        <div class="card" id="biodata">
+            <h3>Identitas Diri</h3>
+            <p><b>Nama Lengkap:</b> M. Abid Alfakhri</p>
+            <p><b>NIM:</b> 241401084</p>
+            <p><b>KOM:</b> C</p>
+            <p><b>Hobi:</b> Belajar, Membaca, Bermain game</p>
+            <p><b>Motto Hidup:</b>
+                <i>"Belajar hari ini untuk masa depan yang lebih baik."</i>
+            </p>
+        </div>
+
+        <div class="card" id="perkenalan">
+            <h3>Perkenalan Singkat</h3>
+            <p>
+                Halo, saya <b>M. Abid Alfakhri</b> dengan NIM <b>241401084</b> Mahasiswa Ilmu Komputer Angkatan 2024 dari Kom C. Saya memiliki hobi yaitu Belajar, Membaca dan Bermain game.
+            </p>
+            <img src="fotosaya.png" alt="Foto Mahasiswa">
+        </div>
+
+        <div class="card" id="jadwal">
+            <h3>Jadwal Kuliah</h3>
+            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari mata kuliah...">
+
+            <table id="jadwalTable">
+                <thead>
+                    <tr>
+                        <th>Mata Kuliah</th>
+                        <th>SKS</th>
+                        <th>Kls</th>
+                        <th>Ruang</th>
+                        <th>Jadwal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Komputerisasi Ekonomi dan Bisnis <small>KWU-A</small></td>
+                        <td>2</td>
+                        <td>KWU-A</td>
+                        <td>GL 2A</td>
+                        <td><strong>Senin, 13:00 - 14:40</strong></td>
+                    </tr>
+                    <tr>
+                        <td>IELTS Preparation <small>PIK F</small></td>
+                        <td>2</td>
+                        <td>PIK F</td>
+                        <td>D-101</td>
+                        <td><strong>Selasa, 10:30 - 12:10</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Praktikum Struktur Data <small>Lab 6 C</small></td>
+                        <td>1</td>
+                        <td>C</td>
+                        <td>Lab Pemrograman 2</td>
+                        <td><strong>Selasa, 12:10 - 13:50</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Praktikum Pemrograman Web <small>Lab 6 C</small></td>
+                        <td>1</td>
+                        <td>C</td>
+                        <td>Lab Pemrograman 1</td>
+                        <td><strong>Selasa, 13:50 - 15:30</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Struktur Data <small>Kelas C</small></td>
+                        <td>3</td>
+                        <td>C</td>
+                        <td>D-104</td>
+                        <td><strong>Rabu, 08:00 - 10:30</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Pemrograman Web <small>Kelas C</small></td>
+                        <td>3</td>
+                        <td>C</td>
+                        <td>D-102</td>
+                        <td><strong>Rabu, 14:40 - 17:10</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Basis Data <small>Kelas C</small></td>
+                        <td>3</td>
+                        <td>C</td>
+                        <td>D-101</td>
+                        <td><strong>Jumat, 08:00 - 10:30</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Wirausaha Digital <small>Kelas C</small></td>
+                        <td>2</td>
+                        <td>C</td>
+                        <td>D-105</td>
+                        <td><strong>Jumat, 10:30 - 12:10</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Praktikum Basis Data <small>Lab 6</small></td>
+                        <td>1</td>
+                        <td>C</td>
+                        <td>Lab Pemrograman 3</td>
+                        <td><strong>Jumat, 14:40 - 16:20</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 | M. Abid Alfakhri | Ilmu Komputer
+    </footer>
+
+    <script>
+        function filterTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#jadwalTable tbody tr");
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+</body>
+
+</html>
