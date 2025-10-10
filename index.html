@@ -2,27 +2,44 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biodata & Jadwal Mahasiswa</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biodata & Website Pembelajaran</title>
     <style>
+         :root {
+            --primary: #0b69ff;
+            --bg: #f9fafc;
+            --text: #222;
+            --card: #fff;
+        }
+        
+        body.dark {
+            --primary: #1e88e5;
+            --bg: #0d1117;
+            --text: #e0e0e0;
+            --card: #1a1f24;
+        }
+        
         body {
             font-family: "Segoe UI", sans-serif;
             margin: 0;
             padding: 0;
-            background: #f9fafc;
-            color: #222;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            scroll-behavior: smooth;
         }
         
         nav {
             position: sticky;
             top: 0;
-            background: #0b69ff;
+            background: var(--primary);
             color: white;
             padding: 12px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 100;
         }
         
         nav h2 {
@@ -32,19 +49,37 @@
         nav ul {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             margin: 0;
             padding: 0;
+            flex-wrap: wrap;
         }
         
         nav ul li a {
             text-decoration: none;
             color: white;
             font-weight: bold;
+            transition: color 0.3s;
         }
         
         nav ul li a:hover {
             color: #ffea00;
+        }
+        
+        #themeToggle {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        #themeToggle:hover {
+            background: #ffea00;
+            color: #000;
         }
         
         .container {
@@ -55,19 +90,20 @@
         
         h1 {
             text-align: center;
-            color: #0b69ff;
+            color: var(--primary);
         }
         
         .card {
-            background: white;
+            background: var(--card);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 25px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, color 0.3s;
         }
         
         .card h3 {
-            border-left: 5px solid #0b69ff;
+            border-left: 5px solid var(--primary);
             padding-left: 8px;
             margin-bottom: 15px;
         }
@@ -76,12 +112,19 @@
             display: block;
             margin: 15px auto;
             border-radius: 10px;
-            border: 3px solid #0b69ff;
+            border: 3px solid var(--primary);
             width: 150px;
             height: 150px;
             object-fit: cover;
         }
-        /* Search */
+        
+        iframe {
+            width: 100%;
+            height: 360px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: none;
+        }
         
         #searchInput {
             width: 100%;
@@ -91,15 +134,20 @@
             border-radius: 6px;
             font-size: 14px;
         }
-        /* Jadwal Table */
+        
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 8px;
+            display: none;
+        }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            border-radius: 8px;
-            overflow: hidden;
-            background: white;
+            background: var(--card);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            min-width: 700px;
         }
         
         th,
@@ -116,16 +164,6 @@
             color: #333;
         }
         
-        td small {
-            display: block;
-            color: gray;
-            font-size: 12px;
-        }
-        
-        td strong {
-            color: #0b69ff;
-        }
-        
         tr:hover {
             background: #f9f9f9;
         }
@@ -133,22 +171,46 @@
         footer {
             text-align: center;
             padding: 15px;
-            background: #0b69ff;
+            background: var(--primary);
             color: white;
             margin-top: 40px;
+        }
+        
+        #toggleJadwal {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        
+        #toggleJadwal:hover {
+            background: #084dcc;
+        }
+        
+        @media (max-width: 600px) {
+            iframe {
+                height: 250px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
     <nav>
         <h2>Profil Mahasiswa</h2>
         <ul>
             <li><a href="#biodata">Biodata</a></li>
             <li><a href="#perkenalan">Perkenalan</a></li>
             <li><a href="#jadwal">Jadwal</a></li>
+            <li><a href="#mengenal">Mengenal Web</a></li>
+            <li><a href="#tata-cara">Tata Cara</a></li>
+            <li><a href="#kesan-pesan">Kesan & Pesan</a></li>
         </ul>
+        <button id="themeToggle">🌙 Mode Gelap</button>
     </nav>
 
     <div class="container">
@@ -160,105 +222,158 @@
             <p><b>NIM:</b> 241401084</p>
             <p><b>KOM:</b> C</p>
             <p><b>Hobi:</b> Belajar, Membaca, Bermain game</p>
-            <p><b>Motto Hidup:</b>
-                <i>"Belajar hari ini untuk masa depan yang lebih baik."</i>
-            </p>
+            <p><b>Motto Hidup:</b> <i>"Belajar hari ini untuk masa depan yang lebih baik."</i></p>
         </div>
 
         <div class="card" id="perkenalan">
             <h3>Perkenalan Singkat</h3>
             <p>
-                Halo, saya <b>M. Abid Alfakhri</b> dengan NIM <b>241401084</b> Mahasiswa Ilmu Komputer Angkatan 2024 dari Kom C. Saya memiliki hobi yaitu Belajar, Membaca dan Bermain game.
+                Halo, saya <b>M. Abid Alfakhri</b> dengan NIM <b>241401084</b>, Mahasiswa Ilmu Komputer Angkatan 2024 dari Kom C. Saya memiliki hobi yaitu Belajar, Membaca, dan Bermain game.
             </p>
-            <img src="fotosaya.png" alt="Foto Mahasiswa">
+            <img src="fotosaya.png" alt="Foto Mahasiswa" />
         </div>
 
         <div class="card" id="jadwal">
             <h3>Jadwal Kuliah</h3>
-            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari mata kuliah...">
+            <button id="toggleJadwal">📅 Tampilkan Jadwal</button>
+            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari mata kuliah..." />
 
-            <table id="jadwalTable">
-                <thead>
-                    <tr>
-                        <th>Mata Kuliah</th>
-                        <th>SKS</th>
-                        <th>Kls</th>
-                        <th>Ruang</th>
-                        <th>Jadwal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Komputerisasi Ekonomi dan Bisnis <small>KWU-A</small></td>
-                        <td>2</td>
-                        <td>KWU-A</td>
-                        <td>GL 2A</td>
-                        <td><strong>Senin, 13:00 - 14:40</strong></td>
-                    </tr>
-                    <tr>
-                        <td>IELTS Preparation <small>PIK F</small></td>
-                        <td>2</td>
-                        <td>PIK F</td>
-                        <td>D-101</td>
-                        <td><strong>Selasa, 10:30 - 12:10</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Praktikum Struktur Data <small>Lab 6 C</small></td>
-                        <td>1</td>
-                        <td>C</td>
-                        <td>Lab Pemrograman 2</td>
-                        <td><strong>Selasa, 12:10 - 13:50</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Praktikum Pemrograman Web <small>Lab 6 C</small></td>
-                        <td>1</td>
-                        <td>C</td>
-                        <td>Lab Pemrograman 1</td>
-                        <td><strong>Selasa, 13:50 - 15:30</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Struktur Data <small>Kelas C</small></td>
-                        <td>3</td>
-                        <td>C</td>
-                        <td>D-104</td>
-                        <td><strong>Rabu, 08:00 - 10:30</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Pemrograman Web <small>Kelas C</small></td>
-                        <td>3</td>
-                        <td>C</td>
-                        <td>D-102</td>
-                        <td><strong>Rabu, 14:40 - 17:10</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Basis Data <small>Kelas C</small></td>
-                        <td>3</td>
-                        <td>C</td>
-                        <td>D-101</td>
-                        <td><strong>Jumat, 08:00 - 10:30</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Wirausaha Digital <small>Kelas C</small></td>
-                        <td>2</td>
-                        <td>C</td>
-                        <td>D-105</td>
-                        <td><strong>Jumat, 10:30 - 12:10</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Praktikum Basis Data <small>Lab 6</small></td>
-                        <td>1</td>
-                        <td>C</td>
-                        <td>Lab Pemrograman 3</td>
-                        <td><strong>Jumat, 14:40 - 16:20</strong></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container" id="tableContainer">
+                <table id="jadwalTable">
+                    <thead>
+                        <tr>
+                            <th>Mata Kuliah</th>
+                            <th>SKS</th>
+                            <th>Kls</th>
+                            <th>Ruang</th>
+                            <th>Jadwal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Komputerisasi Ekonomi dan Bisnis <small>KWU-A</small></td>
+                            <td>2</td>
+                            <td>KWU-A</td>
+                            <td>GL 2A</td>
+                            <td><strong>Senin, 13:00 - 14:40</strong></td>
+                        </tr>
+                        <tr>
+                            <td>IELTS Preparation <small>PIK F</small></td>
+                            <td>2</td>
+                            <td>PIK F</td>
+                            <td>D-101</td>
+                            <td><strong>Selasa, 10:30 - 12:10</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Praktikum Struktur Data <small>Lab 6 C</small></td>
+                            <td>1</td>
+                            <td>C</td>
+                            <td>Lab Pemrograman 2</td>
+                            <td><strong>Selasa, 12:10 - 13:50</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Praktikum Pemrograman Web <small>Lab 6 C</small></td>
+                            <td>1</td>
+                            <td>C</td>
+                            <td>Lab Pemrograman 1</td>
+                            <td><strong>Selasa, 13:50 - 15:30</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Struktur Data <small>Kelas C</small></td>
+                            <td>3</td>
+                            <td>C</td>
+                            <td>D-104</td>
+                            <td><strong>Rabu, 08:00 - 10:30</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Pemrograman Web <small>Kelas C</small></td>
+                            <td>3</td>
+                            <td>C</td>
+                            <td>D-102</td>
+                            <td><strong>Rabu, 14:40 - 17:10</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Basis Data <small>Kelas C</small></td>
+                            <td>3</td>
+                            <td>C</td>
+                            <td>D-101</td>
+                            <td><strong>Jumat, 08:00 - 10:30</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Wirausaha Digital <small>Kelas C</small></td>
+                            <td>2</td>
+                            <td>C</td>
+                            <td>D-105</td>
+                            <td><strong>Jumat, 10:30 - 12:10</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Praktikum Basis Data <small>Lab 6</small></td>
+                            <td>1</td>
+                            <td>C</td>
+                            <td>Lab Pemrograman 3</td>
+                            <td><strong>Jumat, 14:40 - 16:20</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mengenal HTML, CSS, JS, Tailwind -->
+        <div class="card" id="mengenal">
+            <h3>Mengenal HTML, CSS, JavaScript, dan Tailwind</h3>
+            <p>
+                Dalam dunia pengembangan web, empat komponen utama yang selalu digunakan adalah HTML, CSS, JavaScript, dan Tailwind CSS.
+                <b>HTML (HyperText Markup Language)</b> merupakan dasar dari semua halaman web. Ia berfungsi membentuk struktur dan konten dari halaman, seperti teks, gambar, tabel, tautan, dan sebagainya. Tanpa HTML, halaman web hanyalah kertas kosong.
+            </p>
+            <p>
+                <b>CSS (Cascading Style Sheets)</b> digunakan untuk mempercantik tampilan HTML. CSS mengatur warna, ukuran teks, posisi elemen, serta membuat tampilan menjadi responsif agar dapat menyesuaikan layar perangkat seperti laptop maupun smartphone.
+                Dengan CSS, web menjadi lebih menarik dan nyaman dilihat.
+            </p>
+            <p>
+                <b>JavaScript</b> memberikan kehidupan pada web. Ia memungkinkan interaktivitas, seperti tombol yang bisa ditekan, animasi bergerak, validasi form, hingga komunikasi dengan server. JavaScript menjadikan halaman web tidak hanya statis,
+                tetapi juga dinamis dan responsif.
+            </p>
+            <p>
+                Terakhir, <b>Tailwind CSS</b> adalah framework CSS modern yang menyediakan class siap pakai untuk mempercepat proses styling. Alih-alih menulis CSS panjang, pengembang cukup menambahkan class seperti <code>bg-blue-500</code> atau <code>text-center</code>                langsung di HTML. Hasilnya, pengembangan menjadi lebih cepat, efisien, dan tetap konsisten secara desain.
+            </p>
+        </div>
+
+        <!-- Tata Cara Membuat Website Sederhana -->
+        <div class="card" id="tata-cara">
+            <h3>Tata Cara Membuat Website Sederhana</h3>
+            <p>
+                Membuat website sederhana sebenarnya tidak sesulit yang dibayangkan. Langkah pertama adalah menyiapkan struktur dasar menggunakan HTML. Di dalam file <code>index.html</code>, kita menuliskan elemen-elemen penting seperti <code>&lt;head&gt;</code>                dan <code>&lt;body&gt;</code>. Pada bagian <code>&lt;head&gt;</code> berisi informasi halaman seperti judul dan link CSS, sementara <code>&lt;body&gt;</code> berisi konten yang akan ditampilkan.
+            </p>
+            <p>
+                Setelah struktur dibuat, tahap berikutnya adalah mempercantik tampilan menggunakan CSS. Di sinilah warna, ukuran, jarak, dan tata letak elemen diatur agar tampak menarik. Kamu bisa menulis CSS langsung di dalam file HTML atau menggunakan file terpisah
+                seperti <code>style.css</code> untuk menjaga kerapian kode.
+            </p>
+            <p>
+                Jika ingin menambahkan interaksi seperti tombol yang dapat diklik atau animasi, gunakan JavaScript. Bahasa ini memungkinkan website merespons tindakan pengguna, misalnya menampilkan pesan, mengganti warna, atau memuat data baru tanpa perlu memuat ulang
+                halaman.
+            </p>
+            <p>
+                Untuk mempermudah pengembangan, kini banyak developer menggunakan Tailwind CSS. Framework ini memberikan class siap pakai yang bisa langsung digunakan di HTML untuk mendesain elemen tanpa harus menulis CSS manual. Tailwind cocok digunakan untuk proyek
+                cepat karena tampilannya sudah konsisten dan mudah disesuaikan.
+            </p>
+            <p>
+                Setelah website selesai dibuat, kamu bisa mengujinya di browser dan memastikan tampilannya sudah sesuai. Jika ingin membagikannya ke orang lain, kamu dapat meng-upload website tersebut ke layanan hosting seperti GitHub Pages atau Netlify.
+            </p>
+        </div>
+
+        <!-- Kesan Pesan -->
+        <div class="card" id="kesan-pesan">
+            <h3>Kesan dan Pesan Belajar Pemrograman Web</h3>
+            <p>
+                Kesan dan pesan saya selama belajar pemrograman web yaitu cukup menyenangkan, karena kita bisa membangun web sesuai dengan keinginan kita sendiri, kita juga bisa mendesign web kita sendiri sesuai dengan kreatifitas kita sendiri.
+            </p>
+            <p>
+                Awalnya memang terlihat rumit, tetapi semakin lama kita berlatih, semakin terasa menyenangkan. Kelebihan dari belajar web adalah kita bisa langsung melihat hasil kerja kita di browser secara nyata, dan itu memberikan rasa puas tersendiri.
+            </p>
         </div>
     </div>
 
-    <footer>
-        &copy; 2025 | M. Abid Alfakhri | Ilmu Komputer
-    </footer>
+    <footer>&copy; 2025 | M. Abid Alfakhri | Ilmu Komputer</footer>
 
     <script>
         function filterTable() {
@@ -269,6 +384,22 @@
                 row.style.display = text.includes(input) ? "" : "none";
             });
         }
+
+        const toggleBtn = document.getElementById("themeToggle");
+        toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            toggleBtn.textContent = document.body.classList.contains("dark") ?
+                "☀️ Mode Terang" :
+                "🌙 Mode Gelap";
+        });
+
+        const toggleJadwal = document.getElementById("toggleJadwal");
+        const tableContainer = document.getElementById("tableContainer");
+        toggleJadwal.addEventListener("click", () => {
+            const visible = tableContainer.style.display === "block";
+            tableContainer.style.display = visible ? "none" : "block";
+            toggleJadwal.textContent = visible ? "📅 Tampilkan Jadwal" : "❌ Sembunyikan Jadwal";
+        });
     </script>
 </body>
 
