@@ -2,404 +2,915 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Biodata & Website Pembelajaran</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Biodata & Pembelajaran — M. Abid Alfakhri</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
          :root {
-            --primary: #0b69ff;
-            --bg: #f9fafc;
-            --text: #222;
-            --card: #fff;
+            --maxw: 1200px;
+            --sidebar-w: 260px;
+            --gap: 28px;
+            --radius: 14px;
+            /* soft green palette */
+            --g1: #33cc99;
+            /* main green */
+            --g2: #2fb386;
+            --g3: #1f6f4e;
+            /* darker accent */
+            /* dark ambience */
+            --bg-0: #040505;
+            /* almost black */
+            --bg-1: #07110d;
+            /* deep charcoal */
+            --card: #071216;
+            /* card bg */
+            --muted: #9fdac2;
+            /* muted green-ish for subtitles */
+            --text: #e6fff5;
+            /* off-white, high contrast */
+            --glass: rgba(255, 255, 255, 0.02);
+            --shadow-sm: 0 14px 40px rgba(0, 0, 0, 0.7);
+            --shadow-lg: 0 36px 110px rgba(0, 0, 0, 0.75);
+            --transition: 340ms cubic-bezier(.2, .9, .2, 1);
+        }
+        /* light theme (when user toggles) */
+        
+        body.light {
+            --bg-0: #f4fbff;
+            --bg-1: #eef6ff;
+            --card: #ffffff;
+            --muted: #506070;
+            --text: #072034;
+            --glass: rgba(255, 255, 255, 0.72);
+            --shadow-sm: 0 10px 30px rgba(6, 18, 45, 0.06);
+            --shadow-lg: 0 26px 70px rgba(6, 18, 45, 0.10);
+        }
+        /* ================== BASE RESET ================== */
+        
+        * {
+            box-sizing: border-box
         }
         
-        body.dark {
-            --primary: #1e88e5;
-            --bg: #0d1117;
-            --text: #e0e0e0;
-            --card: #1a1f24;
+        html,
+        body {
+            height: 100%
         }
         
         body {
-            font-family: "Segoe UI", sans-serif;
             margin: 0;
-            padding: 0;
-            background: var(--bg);
+            font-family: "Poppins", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+            background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
             color: var(--text);
-            transition: background 0.3s, color 0.3s;
-            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.55;
+            transition: background .35s ease, color .25s ease;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
         
-        nav {
-            position: sticky;
-            top: 0;
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+        
+        img {
+            display: block;
+            max-width: 100%
+        }
+        
+        .wrap {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 18px
+        }
+        /* ================== LEFT SIDEBAR (fixed) ================== */
+        
+        .left-rail {
+            position: fixed;
+            left: 0%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* ⬅️ tambahkan baris ini */
+            width: var(--sidebar-w);
+            max-height: calc(100vh - 56px);
+            padding: 18px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(8px) saturate(120%);
+            overflow: auto;
+            z-index: 1400;
+        }
+        
+        body.light .left-rail {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.82));
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .left-rail .toc-title {
+            font-family: "Playfair Display", serif;
+            font-size: 18px;
+            color: var(--g2);
+            margin-bottom: 12px;
+            font-weight: 700
+        }
+        
+        .toc {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .toc a {
+            display: flex;
+            gap: 10px;
             align-items: center;
-            z-index: 100;
+            padding: 10px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--muted);
+            transition: all .18s ease;
         }
         
-        nav h2 {
-            margin: 0;
+        .toc a:hover {
+            transform: translateX(6px);
+            color: #071216;
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            box-shadow: 0 10px 26px rgba(34, 153, 119, 0.08);
         }
         
-        nav ul {
-            list-style: none;
+        .toc a.active {
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            color: #071216;
+            box-shadow: 0 10px 26px rgba(34, 153, 119, 0.08);
+        }
+        
+        .toc .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            box-shadow: 0 6px 20px rgba(34, 153, 119, 0.08)
+        }
+        
+        @media (max-width: 980px) {
+            .left-rail {
+                display: none;
+            }
+        }
+        /* ================== TOP BAR (controls) ================== */
+        
+        .topbar {
+            position: sticky;
+            top: 12px;
+            z-index: 1300;
+            margin: 12px auto;
+            max-width: calc(var(--maxw) + 36px);
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.01));
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(6px) saturate(120%);
+        }
+        
+        body.light .topbar {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.82));
+        }
+        
+        .theme-btn {
+            border: 0;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            color: #071216;
+            box-shadow: 0 10px 26px rgba(34, 153, 119, 0.08);
+        }
+        
+        .hambtn {
+            display: none;
+            background: transparent;
+            border: 0;
+            font-size: 20px;
+            padding: 8px;
+            color: var(--text);
+            cursor: pointer;
+        }
+        
+        @media (max-width:980px) {
+            .topbar {
+                justify-content: space-between;
+                padding: 8px 12px;
+            }
+            .hambtn {
+                display: inline-block;
+            }
+        }
+        /* ================== MAGAZINE GRID (content) ================== */
+        
+        .mag {
+            margin: 26px auto;
+            max-width: calc(var(--maxw) + var(--sidebar-w) + 40px);
+            display: grid;
+            grid-template-columns: var(--sidebar-w) 1fr;
+            gap: var(--gap);
+            align-items: start;
+            padding: 0 18px 80px;
+        }
+        
+        .mag .spacer {
+            width: var(--sidebar-w)
+        }
+        /* placeholder because left-rail is fixed */
+        
+        .content {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        
+        .panel {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+            opacity: 0;
+            transform: translateY(18px) scale(.998);
+        }
+        
+        .panel.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .panel:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .panel h2 {
+            margin: 0 0 12px;
+            font-family: "Playfair Display", serif;
+            font-size: 20px;
+            color: var(--g2)
+        }
+        
+        .panel .lead {
+            color: var(--text);
+            font-size: 15.5px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .panel p {
+            color: var(--muted);
+            margin: 8px 0;
+        }
+        /* hero-style first panel */
+        
+        .hero-panel {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 20px;
+            align-items: center;
+            padding: 28px;
+        }
+        
+        .hero-left h1 {
+            font-size: 28px;
             margin: 0;
-            padding: 0;
+            color: var(--g1);
+            font-family: "Playfair Display", serif;
+        }
+        
+        .hero-left .subtitle {
+            margin-top: 8px;
+            color: var(--muted);
+        }
+        
+        .chips {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
         }
         
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            transition: color 0.3s;
+        .chip {
+            background: linear-gradient(90deg, rgba(51, 204, 153, 0.06), rgba(47, 179, 134, 0.04));
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            color: var(--g1);
         }
         
-        nav ul li a:hover {
-            color: #ffea00;
+        .hero-photo {
+            width: 220px;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 4px solid var(--g1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        #themeToggle {
-            background: white;
-            color: var(--primary);
-            border: none;
-            border-radius: 20px;
-            padding: 6px 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        #themeToggle:hover {
-            background: #ffea00;
-            color: #000;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-        
-        h1 {
-            text-align: center;
-            color: var(--primary);
-        }
-        
-        .card {
-            background: var(--card);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s, color 0.3s;
-        }
-        
-        .card h3 {
-            border-left: 5px solid var(--primary);
-            padding-left: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .card img {
-            display: block;
-            margin: 15px auto;
-            border-radius: 10px;
-            border: 3px solid var(--primary);
-            width: 150px;
-            height: 150px;
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            display: block;
+            transition: transform .45s
+        }
+        /* content grids */
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start;
         }
         
-        iframe {
-            width: 100%;
-            height: 360px;
+        .iconbox {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(51, 204, 153, 0.06), rgba(47, 179, 134, 0.04));
+            box-shadow: 0 10px 26px rgba(34, 153, 119, 0.04);
+            transition: transform .28s
+        }
+        
+        .iconbox svg {
+            width: 36px;
+            height: 36px;
+            fill: var(--g3)
+        }
+        
+        .grid-2 .item p {
+            color: var(--muted);
+            margin: 6px 0 0
+        }
+        /* jadwal table */
+        
+        .table-wrap {
+            margin-top: 12px;
             border-radius: 10px;
-            margin-top: 10px;
-            border: none;
-        }
-        
-        #searchInput {
-            width: 100%;
-            padding: 10px;
-            margin: 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            border-radius: 8px;
-            display: none;
+            overflow: auto;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.03);
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 640px;
             background: var(--card);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            min-width: 700px;
+            color: var(--text);
         }
         
         th,
         td {
-            padding: 14px;
+            padding: 12px 14px;
             text-align: left;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             vertical-align: top;
         }
         
         th {
-            background: #f2f6ff;
-            font-weight: bold;
-            color: #333;
+            background: linear-gradient(90deg, rgba(51, 204, 153, 0.03), rgba(47, 179, 134, 0.02));
+            font-weight: 800;
+            color: var(--text);
         }
         
         tr:hover {
-            background: #f9f9f9;
+            background: rgba(51, 204, 153, 0.02)
         }
+        /* footer */
         
         footer {
+            margin: 30px auto 80px;
+            max-width: var(--maxw);
+            padding: 18px;
+            border-radius: 12px;
             text-align: center;
-            padding: 15px;
-            background: var(--primary);
-            color: white;
-            margin-top: 40px;
+            background: linear-gradient(90deg, var(--g1), var(--g2));
+            color: #071216;
+            box-shadow: var(--shadow-sm)
+        }
+        /* reveal helper & responsive */
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .5s ease, transform .5s ease;
         }
         
-        #toggleJadwal {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: 0.3s;
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        #toggleJadwal:hover {
-            background: #084dcc;
-        }
-        
-        @media (max-width: 600px) {
-            iframe {
-                height: 250px;
+        @media (max-width: 1080px) {
+            .mag {
+                grid-template-columns: 1fr;
+                padding: 0 12px 80px;
             }
+            .left-rail {
+                display: none;
+            }
+            .spacer {
+                display: none;
+            }
+        }
+        
+        @media (max-width:520px) {
+            .hero-panel {
+                grid-template-columns: 1fr;
+            }
+            .hero-photo {
+                width: 160px;
+                height: 160px;
+                margin: 0 auto;
+            }
+            table {
+                font-size: 14px
+            }
+        }
+        /* enforce readable contrast in dark mode */
+        
+        body:not(.light) h2,
+        body:not(.light) p,
+        body:not(.light) td,
+        body:not(.light) th {
+            color: var(--text);
         }
     </style>
 </head>
 
-<body>
-    <nav>
-        <h2>Profil Mahasiswa</h2>
-        <ul>
-            <li><a href="#biodata">Biodata</a></li>
-            <li><a href="#perkenalan">Perkenalan</a></li>
-            <li><a href="#jadwal">Jadwal</a></li>
-            <li><a href="#mengenal">Mengenal Web</a></li>
-            <li><a href="#tata-cara">Tata Cara</a></li>
-            <li><a href="#kesan-pesan">Kesan & Pesan</a></li>
-        </ul>
-        <button id="themeToggle">🌙 Mode Gelap</button>
-    </nav>
+<body class="dark">
+    <!-- dark default -->
+    <!-- LEFT RAIL (fixed) with TOC -->
+    <aside class="left-rail" aria-label="Daftar isi">
+        <div class="toc-title">Daftar Isi</div>
+        <nav class="toc" id="toc">
+            <a href="#perkenalan" data-target="perkenalan"><span class="dot"></span><span>Perkenalan</span></a>
+            <a href="#biodata" data-target="biodata"><span class="dot"></span><span>Identitas Diri</span></a>
+            <a href="#jadwal" data-target="jadwal"><span class="dot"></span><span>Jadwal Kuliah</span></a>
+            <a href="#mengenal" data-target="mengenal"><span class="dot"></span><span>Mengenal Web</span></a>
+            <a href="#tata-cara" data-target="tata-cara"><span class="dot"></span><span>Tata Cara</span></a>
+            <a href="#kesan-pesan" data-target="kesan-pesan"><span class="dot"></span><span>Kesan & Pesan</span></a>
+        </nav>
+    </aside>
 
-    <div class="container">
-        <h1>BIODATA MAHASISWA</h1>
-
-        <div class="card" id="biodata">
-            <h3>Identitas Diri</h3>
-            <p><b>Nama Lengkap:</b> M. Abid Alfakhri</p>
-            <p><b>NIM:</b> 241401084</p>
-            <p><b>KOM:</b> C</p>
-            <p><b>Hobi:</b> Belajar, Membaca, Bermain game</p>
-            <p><b>Motto Hidup:</b> <i>"Belajar hari ini untuk masa depan yang lebih baik."</i></p>
-        </div>
-
-        <div class="card" id="perkenalan">
-            <h3>Perkenalan Singkat</h3>
-            <p>
-                Halo, saya <b>M. Abid Alfakhri</b> dengan NIM <b>241401084</b>, Mahasiswa Ilmu Komputer Angkatan 2024 dari Kom C. Saya memiliki hobi yaitu Belajar, Membaca, dan Bermain game.
-            </p>
-            <img src="fotosaya.png" alt="Foto Mahasiswa" />
-        </div>
-
-        <div class="card" id="jadwal">
-            <h3>Jadwal Kuliah</h3>
-            <button id="toggleJadwal">📅 Tampilkan Jadwal</button>
-            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari mata kuliah..." />
-
-            <div class="table-container" id="tableContainer">
-                <table id="jadwalTable">
-                    <thead>
-                        <tr>
-                            <th>Mata Kuliah</th>
-                            <th>SKS</th>
-                            <th>Kls</th>
-                            <th>Ruang</th>
-                            <th>Jadwal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Komputerisasi Ekonomi dan Bisnis <small>KWU-A</small></td>
-                            <td>2</td>
-                            <td>KWU-A</td>
-                            <td>GL 2A</td>
-                            <td><strong>Senin, 13:00 - 14:40</strong></td>
-                        </tr>
-                        <tr>
-                            <td>IELTS Preparation <small>PIK F</small></td>
-                            <td>2</td>
-                            <td>PIK F</td>
-                            <td>D-101</td>
-                            <td><strong>Selasa, 10:30 - 12:10</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Praktikum Struktur Data <small>Lab 6 C</small></td>
-                            <td>1</td>
-                            <td>C</td>
-                            <td>Lab Pemrograman 2</td>
-                            <td><strong>Selasa, 12:10 - 13:50</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Praktikum Pemrograman Web <small>Lab 6 C</small></td>
-                            <td>1</td>
-                            <td>C</td>
-                            <td>Lab Pemrograman 1</td>
-                            <td><strong>Selasa, 13:50 - 15:30</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Struktur Data <small>Kelas C</small></td>
-                            <td>3</td>
-                            <td>C</td>
-                            <td>D-104</td>
-                            <td><strong>Rabu, 08:00 - 10:30</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Pemrograman Web <small>Kelas C</small></td>
-                            <td>3</td>
-                            <td>C</td>
-                            <td>D-102</td>
-                            <td><strong>Rabu, 14:40 - 17:10</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Basis Data <small>Kelas C</small></td>
-                            <td>3</td>
-                            <td>C</td>
-                            <td>D-101</td>
-                            <td><strong>Jumat, 08:00 - 10:30</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Wirausaha Digital <small>Kelas C</small></td>
-                            <td>2</td>
-                            <td>C</td>
-                            <td>D-105</td>
-                            <td><strong>Jumat, 10:30 - 12:10</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Praktikum Basis Data <small>Lab 6</small></td>
-                            <td>1</td>
-                            <td>C</td>
-                            <td>Lab Pemrograman 3</td>
-                            <td><strong>Jumat, 14:40 - 16:20</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Mengenal HTML, CSS, JS, Tailwind -->
-        <div class="card" id="mengenal">
-            <h3>Mengenal HTML, CSS, JavaScript, dan Tailwind</h3>
-            <p>
-                Dalam dunia pengembangan web, empat komponen utama yang selalu digunakan adalah HTML, CSS, JavaScript, dan Tailwind CSS.
-                <b>HTML (HyperText Markup Language)</b> merupakan dasar dari semua halaman web. Ia berfungsi membentuk struktur dan konten dari halaman, seperti teks, gambar, tabel, tautan, dan sebagainya. Tanpa HTML, halaman web hanyalah kertas kosong.
-            </p>
-            <p>
-                <b>CSS (Cascading Style Sheets)</b> digunakan untuk mempercantik tampilan HTML. CSS mengatur warna, ukuran teks, posisi elemen, serta membuat tampilan menjadi responsif agar dapat menyesuaikan layar perangkat seperti laptop maupun smartphone.
-                Dengan CSS, web menjadi lebih menarik dan nyaman dilihat.
-            </p>
-            <p>
-                <b>JavaScript</b> memberikan kehidupan pada web. Ia memungkinkan interaktivitas, seperti tombol yang bisa ditekan, animasi bergerak, validasi form, hingga komunikasi dengan server. JavaScript menjadikan halaman web tidak hanya statis,
-                tetapi juga dinamis dan responsif.
-            </p>
-            <p>
-                Terakhir, <b>Tailwind CSS</b> adalah framework CSS modern yang menyediakan class siap pakai untuk mempercepat proses styling. Alih-alih menulis CSS panjang, pengembang cukup menambahkan class seperti <code>bg-blue-500</code> atau <code>text-center</code>                langsung di HTML. Hasilnya, pengembangan menjadi lebih cepat, efisien, dan tetap konsisten secara desain.
-            </p>
-        </div>
-
-        <!-- Tata Cara Membuat Website Sederhana -->
-        <div class="card" id="tata-cara">
-            <h3>Tata Cara Membuat Website Sederhana</h3>
-            <p>
-                Membuat website sederhana sebenarnya tidak sesulit yang dibayangkan. Langkah pertama adalah menyiapkan struktur dasar menggunakan HTML. Di dalam file <code>index.html</code>, kita menuliskan elemen-elemen penting seperti <code>&lt;head&gt;</code>                dan <code>&lt;body&gt;</code>. Pada bagian <code>&lt;head&gt;</code> berisi informasi halaman seperti judul dan link CSS, sementara <code>&lt;body&gt;</code> berisi konten yang akan ditampilkan.
-            </p>
-            <p>
-                Setelah struktur dibuat, tahap berikutnya adalah mempercantik tampilan menggunakan CSS. Di sinilah warna, ukuran, jarak, dan tata letak elemen diatur agar tampak menarik. Kamu bisa menulis CSS langsung di dalam file HTML atau menggunakan file terpisah
-                seperti <code>style.css</code> untuk menjaga kerapian kode.
-            </p>
-            <p>
-                Jika ingin menambahkan interaksi seperti tombol yang dapat diklik atau animasi, gunakan JavaScript. Bahasa ini memungkinkan website merespons tindakan pengguna, misalnya menampilkan pesan, mengganti warna, atau memuat data baru tanpa perlu memuat ulang
-                halaman.
-            </p>
-            <p>
-                Untuk mempermudah pengembangan, kini banyak developer menggunakan Tailwind CSS. Framework ini memberikan class siap pakai yang bisa langsung digunakan di HTML untuk mendesain elemen tanpa harus menulis CSS manual. Tailwind cocok digunakan untuk proyek
-                cepat karena tampilannya sudah konsisten dan mudah disesuaikan.
-            </p>
-            <p>
-                Setelah website selesai dibuat, kamu bisa mengujinya di browser dan memastikan tampilannya sudah sesuai. Jika ingin membagikannya ke orang lain, kamu dapat meng-upload website tersebut ke layanan hosting seperti GitHub Pages atau Netlify.
-            </p>
-        </div>
-
-        <!-- Kesan Pesan -->
-        <div class="card" id="kesan-pesan">
-            <h3>Kesan dan Pesan Belajar Pemrograman Web</h3>
-            <p>
-                Kesan dan pesan saya selama belajar pemrograman web yaitu cukup menyenangkan, karena kita bisa membangun web sesuai dengan keinginan kita sendiri, kita juga bisa mendesign web kita sendiri sesuai dengan kreatifitas kita sendiri.
-            </p>
-            <p>
-                Awalnya memang terlihat rumit, tetapi semakin lama kita berlatih, semakin terasa menyenangkan. Kelebihan dari belajar web adalah kita bisa langsung melihat hasil kerja kita di browser secara nyata, dan itu memberikan rasa puas tersendiri.
-            </p>
-        </div>
+    <!-- Top small control bar -->
+    <div class="topbar wrap" role="toolbar" aria-label="Kontrol">
+        <button id="hambtn" class="hambtn" aria-label="Buka menu">☰</button>
+        <div style="flex:1"></div>
+        <button id="themeToggle" class="theme-btn" aria-pressed="true" title="Toggle tema">☀️ Mode Terang</button>
     </div>
+
+    <!-- Magazine grid (spacer + content) -->
+    <section class="mag wrap" aria-live="polite">
+        <div class="spacer" aria-hidden="true"></div>
+
+        <div class="content">
+            <!-- HERO -->
+            <article class="panel hero-panel reveal" id="heroPanel">
+                <div class="hero-left">
+                    <h1>Halo — Saya Muhammad Abid Alfakhri</h1>
+                    <p class="subtitle">Mahasiswa Ilmu Komputer — Kom C • Angkatan 2024</p>
+                    <p class="lead" style="margin-top:12px">Halo! Nama saya Muhammad Abid Alfakhri, saya adalah mahasiswa dari prodi Ilmu Komputer yang sedang menjalankan kuliahnya di kampus Universitas Sumatera Utara.
+                    </p>
+                    <div class="chips">
+                        <div class="chip">Ilmu Komputer</div>
+                        <div class="chip">Kom C</div>
+                        <div class="chip">Angkatan 2024</div>
+                    </div>
+                </div>
+
+                <aside class="hero-photo" aria-hidden="false">
+                    <img src="fotosaya.png" alt="Foto Mahasiswa" onerror="this.src='https://i.ibb.co/vJnwhpn/profile.jpg'">
+                </aside>
+            </article>
+
+
+
+            <!-- BIODATA -->
+            <article class="panel reveal" id="biodata" tabindex="-1" aria-labelledby="identitas-title">
+                <h2 id="identitas-title">Identitas Diri</h2>
+                <div class="content-block">
+                    <p><strong>Nama Lengkap:</strong> M. Abid Alfakhri</p>
+                    <p><strong>Program Studi:</strong> Ilmu Komputer</p>
+                    <p><strong>NIM:</strong> 241401084</p>
+                    <p><strong>KOM:</strong> C</p>
+                    <p><strong>Hobi:</strong> Belajar, Membaca, Bermain game</p>
+                    <p><strong>Motto Hidup:</strong> <em>"Belajar hari ini untuk masa depan yang lebih baik."</em></p>
+
+                </div>
+            </article>
+
+            <!-- JADWAL (moved after Identitas) -->
+            <article class="panel reveal" id="jadwal" tabindex="-1" aria-labelledby="jadwal-title">
+                <h2 id="jadwal-title">Jadwal Kuliah</h2>
+                <div class="content-block">
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+                        <button id="toggleJadwal" class="theme-btn" style="background: linear-gradient(90deg,var(--g1),var(--g2)); color:#071216; border-radius:10px;">📅 Tampilkan Jadwal</button>
+                        <input id="searchInput" onkeyup="filterTable()" placeholder="Cari mata kuliah..." style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);flex:1;min-width:160px" aria-label="Cari mata kuliah">
+                    </div>
+
+                    <div class="table-wrap" id="tableContainer" style="display:none">
+                        <table id="jadwalTable" aria-describedby="jadwal-title">
+                            <thead>
+                                <tr>
+                                    <th>Mata Kuliah</th>
+                                    <th>SKS</th>
+                                    <th>Kls</th>
+                                    <th>Ruang</th>
+                                    <th>Jadwal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Komputerisasi Ekonomi dan Bisnis <small>KWU-A</small></td>
+                                    <td>2</td>
+                                    <td>KWU-A</td>
+                                    <td>GL 2A</td>
+                                    <td><strong>Senin, 13:00 - 14:40</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>IELTS Preparation <small>PIK F</small></td>
+                                    <td>2</td>
+                                    <td>PIK F</td>
+                                    <td>D-101</td>
+                                    <td><strong>Selasa, 10:30 - 12:10</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Praktikum Struktur Data <small>Lab 6 C</small></td>
+                                    <td>1</td>
+                                    <td>C</td>
+                                    <td>Lab Pemrograman 2</td>
+                                    <td><strong>Selasa, 12:10 - 13:50</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Praktikum Pemrograman Web <small>Lab 6 C</small></td>
+                                    <td>1</td>
+                                    <td>C</td>
+                                    <td>Lab Pemrograman 1</td>
+                                    <td><strong>Selasa, 13:50 - 15:30</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Struktur Data <small>Kelas C</small></td>
+                                    <td>3</td>
+                                    <td>C</td>
+                                    <td>D-104</td>
+                                    <td><strong>Rabu, 08:00 - 10:30</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Pemrograman Web <small>Kelas C</small></td>
+                                    <td>3</td>
+                                    <td>C</td>
+                                    <td>D-102</td>
+                                    <td><strong>Rabu, 14:40 - 17:10</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Basis Data <small>Kelas C</small></td>
+                                    <td>3</td>
+                                    <td>C</td>
+                                    <td>D-101</td>
+                                    <td><strong>Jumat, 08:00 - 10:30</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Wirausaha Digital <small>Kelas C</small></td>
+                                    <td>2</td>
+                                    <td>C</td>
+                                    <td>D-105</td>
+                                    <td><strong>Jumat, 10:30 - 12:10</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Praktikum Basis Data <small>Lab 6</small></td>
+                                    <td>1</td>
+                                    <td>C</td>
+                                    <td>Lab Pemrograman 3</td>
+                                    <td><strong>Jumat, 14:40 - 16:20</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MENGENAL -->
+            <article class="panel reveal" id="mengenal" tabindex="-1" aria-labelledby="mengenal-title">
+                <h2 id="mengenal-title">Mengenal HTML, CSS, JavaScript, dan Tailwind</h2>
+                <div class="content-block">
+                    <div class="grid-2">
+                        <div class="item">
+                            <div style="display:flex;gap:12px;align-items:flex-start">
+                                <div class="iconbox floaty" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.7 16.7L3 12l5.7-4.7L7 5 0 12l7 7zM23 12l-7-7-1.7 1.3L20.3 12 14.3 17.7 16 19z"/></svg>
+                                </div>
+                                <div>
+                                    <p><strong>HTML</strong> adalah kerangka halaman web — tempat kita menaruh teks, gambar, tabel, dan tautan. Bayangkan HTML seperti kerangka rumah yang menentukan letak setiap ruang.</p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
+                                <div class="iconbox" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v2H4zM4 10h16v2H4zM4 16h16v2H4z"/></svg>
+                                </div>
+                                <div>
+                                    <p><strong>CSS</strong> adalah cara memberi tampilan — warna, jarak, dan susunan. Jika HTML kerangka, CSS adalah cat, hiasan, dan layout yang bikin nyaman dilihat.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div style="display:flex;gap:12px;align-items:flex-start">
+                                <div class="iconbox" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2 6h6l-4.9 3.6L18 18l-6-3.8L6 18l-.1-6.4L1 8h6z"/></svg>
+                                </div>
+                                <div>
+                                    <p><strong>JavaScript</strong> membuat halaman menjadi interaktif — tombol yang merespons, validasi form, atau memuat konten baru tanpa refresh.</p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
+                                <div class="iconbox" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4h14v2H5zM5 10h14v2H5zM5 16h14v2H5z"/></svg>
+                                </div>
+                                <div>
+                                    <p><strong>Tailwind CSS</strong> adalah kumpulan kelas siap pakai untuk menata tampilan lebih cepat. Cocok kalau ingin membuat desain konsisten tanpa menulis banyak CSS dari nol.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- TATA CARA -->
+            <article class="panel reveal" id="tata-cara" tabindex="-1" aria-labelledby="tata-title">
+                <h2 id="tata-title">Tata Cara Membuat Website Sederhana</h2>
+                <div class="content-block">
+                    <p style=" margin-bottom:10px;">
+                        Membuat website sederhana sebenarnya mudah asal tahu langkah-langkah dasarnya. Website dibangun dari struktur (HTML), tampilan (CSS), dan interaksi (JavaScript). Berikut panduan lengkapnya:
+                    </p>
+                    <ol style="padding-left:18px;">
+                        <li style="margin:10px 0">
+                            <strong>Buat struktur dasar dengan HTML</strong> — Mulailah dengan membuat file <code>index.html</code>. Di dalamnya tuliskan elemen penting seperti <code>&lt;head&gt;</code> dan <code>&lt;body&gt;</code>. Di bagian <code>&lt;head&gt;</code>                            isi dengan <code>&lt;title&gt;</code> untuk judul halaman dan link ke file CSS. Sedangkan di <code>&lt;body&gt;</code>, tambahkan isi halaman seperti teks, gambar, tabel, dan tautan.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Atur tampilan menggunakan CSS</strong> — Buat file <code>style.css</code> untuk mengatur warna, ukuran huruf, posisi elemen, dan jarak antarbagian. Kamu bisa memberi warna latar, membuat teks rata tengah, atau menambahkan
+                            bayangan pada gambar. CSS membuat tampilan website lebih menarik dan responsif di berbagai perangkat.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Tambahkan interaksi dengan JavaScript</strong> — Supaya website tidak hanya diam, tambahkan skrip JavaScript. Misalnya untuk membuat tombol yang bisa diklik, animasi bergerak, atau pesan otomatis saat pengguna mengisi
+                            form. JavaScript membuat halaman terasa hidup dan interaktif.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Gunakan framework dan tools bila perlu</strong> — Jika ingin bekerja lebih cepat, gunakan framework seperti
+                            <b>Tailwind CSS</b> atau <b>Bootstrap</b> untuk styling instan, dan library seperti <b>jQuery</b> untuk mempermudah penulisan JavaScript. Tools ini membantu kamu fokus pada desain dan fungsionalitas tanpa menulis kode terlalu
+                            panjang.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Tambahkan konten dan elemen visual</strong> — Sisipkan gambar, ikon, atau video agar website lebih hidup. Gunakan gambar yang relevan dan tidak terlalu besar agar halaman tetap ringan saat dibuka.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Uji dan perbaiki tampilannya</strong> — Buka file <code>index.html</code> di browser seperti Chrome atau Firefox. Periksa apakah tampilannya sudah sesuai di komputer dan ponsel. Jika layout masih berantakan, periksa
+                            kembali CSS-nya.
+                        </li>
+                        <li style="margin:10px 0">
+                            <strong>Bagikan website kamu</strong> — Setelah selesai, unggah website ke layanan hosting gratis seperti
+                            <b>GitHub Pages</b>, <b>Netlify</b>, atau <b>Vercel</b>. Dengan begitu, orang lain bisa mengakses website kamu dari mana saja.
+                        </li>
+                    </ol>
+                    <p style=" margin-top:12px;">
+                        Dengan mengikuti langkah-langkah di atas, kamu bisa membuat website sederhana yang tampil menarik, berfungsi dengan baik, dan bisa diakses secara online. Kuncinya adalah terus berlatih, mencoba hal baru, dan memperbaiki tampilan sedikit demi sedikit.
+                    </p>
+                </div>
+            </article>
+
+            <!-- KESAN & PESAN -->
+            <article class="panel reveal" id="kesan-pesan" tabindex="-1" aria-labelledby="kesan-title">
+                <h2 id="kesan-title">Kesan dan Pesan Belajar Pemrograman Web</h2>
+                <div class="content-block">
+                    <p>Kesan dan pesan saya selama belajar pemrograman web yaitu cukup menyenangkan, karena kita bisa membangun web sesuai dengan keinginan kita sendiri, kita juga bisa mendesign web kita sendiri sesuai dengan kreatifitas kita sendiri.</p>
+                    <p>Awalnya memang terlihat rumit, tetapi semakin lama kita berlatih, semakin terasa menyenangkan. Kelebihan dari belajar web adalah kita bisa langsung melihat hasil kerja kita di browser secara nyata, dan itu memberikan rasa puas tersendiri.</p>
+                </div>
+            </article>
+
+        </div>
+    </section>
 
     <footer>&copy; 2025 | M. Abid Alfakhri | Ilmu Komputer</footer>
 
+    <!-- ========== SCRIPTS: interactions & behaviors ========== -->
     <script>
-        function filterTable() {
-            let input = document.getElementById("searchInput").value.toLowerCase();
-            let rows = document.querySelectorAll("#jadwalTable tbody tr");
-            rows.forEach(row => {
-                let text = row.innerText.toLowerCase();
-                row.style.display = text.includes(input) ? "" : "none";
+        // helper selectors
+        const qs = s => document.querySelector(s);
+        const qsa = s => Array.from(document.querySelectorAll(s));
+
+        // Default: dark mode (body already has class="dark")
+        // Provide toggle button to switch to light and persist preference.
+        (function() {
+            const btn = qs('#themeToggle');
+            if (!btn) return;
+            try {
+                const pref = localStorage.getItem('pref-theme');
+                if (pref === 'light') {
+                    document.body.classList.remove('dark');
+                    document.body.classList.add('light');
+                    btn.textContent = '🌙 Mode Gelap';
+                    btn.setAttribute('aria-pressed', 'false');
+                } else {
+                    // ensure dark class present (default)
+                    document.body.classList.remove('light');
+                    document.body.classList.add('dark');
+                    btn.textContent = '☀️ Mode Terang';
+                    btn.setAttribute('aria-pressed', 'true');
+                }
+            } catch (e) {}
+            btn.addEventListener('click', () => {
+                const isDarkNow = document.body.classList.toggle('dark');
+                if (isDarkNow) {
+                    document.body.classList.remove('light');
+                    btn.textContent = '☀️ Mode Terang';
+                    btn.setAttribute('aria-pressed', 'true');
+                    try {
+                        localStorage.setItem('pref-theme', 'dark');
+                    } catch (e) {}
+                } else {
+                    document.body.classList.add('light');
+                    btn.textContent = '🌙 Mode Gelap';
+                    btn.setAttribute('aria-pressed', 'false');
+                    try {
+                        localStorage.setItem('pref-theme', 'light');
+                    } catch (e) {}
+                }
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 120);
             });
-        }
+        })();
 
-        const toggleBtn = document.getElementById("themeToggle");
-        toggleBtn.addEventListener("click", () => {
-            document.body.classList.toggle("dark");
-            toggleBtn.textContent = document.body.classList.contains("dark") ?
-                "☀️ Mode Terang" :
-                "🌙 Mode Gelap";
-        });
+        // Mobile menu (hamburger) clone of TOC
+        (function() {
+            const hambtn = qs('#hambtn');
+            const toc = qs('#toc');
+            let overlay = null;
+            if (!hambtn) return;
+            hambtn.addEventListener('click', () => {
+                if (overlay) {
+                    overlay.remove();
+                    overlay = null;
+                    return;
+                }
+                overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.inset = '0';
+                overlay.style.zIndex = 2200;
+                overlay.style.background = 'linear-gradient(180deg, rgba(3,9,23,0.94), rgba(3,9,23,0.94))';
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.padding = '80px 18px';
+                overlay.style.gap = '18px';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'flex-start';
 
-        const toggleJadwal = document.getElementById("toggleJadwal");
-        const tableContainer = document.getElementById("tableContainer");
-        toggleJadwal.addEventListener("click", () => {
-            const visible = tableContainer.style.display === "block";
-            tableContainer.style.display = visible ? "none" : "block";
-            toggleJadwal.textContent = visible ? "📅 Tampilkan Jadwal" : "❌ Sembunyikan Jadwal";
-        });
+                const clone = toc.cloneNode(true);
+                clone.style.flexDirection = 'column';
+                clone.style.width = '100%';
+                clone.querySelectorAll('a').forEach(a => {
+                    a.style.padding = '12px 18px';
+                    a.style.background = 'transparent';
+                    a.style.color = '#fff';
+                    a.addEventListener('click', () => overlay && overlay.remove());
+                });
+
+                overlay.appendChild(clone);
+                const close = document.createElement('button');
+                close.textContent = 'Tutup';
+                close.className = 'theme-btn';
+                close.style.marginTop = '8px';
+                close.addEventListener('click', () => {
+                    overlay.remove();
+                    overlay = null;
+                });
+                overlay.appendChild(close);
+                document.body.appendChild(overlay);
+            });
+        })();
+
+        // Reveal on scroll + highlight TOC
+        (function() {
+            const panels = qsa('.panel');
+            const reveals = qsa('.reveal');
+            const tocLinks = qsa('.toc a');
+
+            function revealOnScroll() {
+                const trigger = window.innerHeight * 0.82;
+                panels.concat(reveals).forEach((el) => {
+                    const r = el.getBoundingClientRect();
+                    if (r.top < trigger) el.classList.add('visible');
+                });
+            }
+
+            function setActiveTOC() {
+                let nearest = null,
+                    min = Infinity;
+                panels.forEach(panel => {
+                    const id = panel.id;
+                    if (!id) return;
+                    const rect = panel.getBoundingClientRect();
+                    const dist = Math.abs(rect.top - 140);
+                    if (dist < min) {
+                        min = dist;
+                        nearest = id;
+                    }
+                });
+                tocLinks.forEach(a => a.classList.toggle('active', a.dataset.target === nearest));
+            }
+
+            window.addEventListener('scroll', () => {
+                revealOnScroll();
+                setActiveTOC();
+            }, {
+                passive: true
+            });
+            window.addEventListener('load', () => {
+                panels.forEach((p, i) => setTimeout(() => p.classList.add('visible'), 120 + i * 70));
+                reveals.forEach((r, i) => setTimeout(() => r.classList.add('visible'), 120 + i * 70));
+                setTimeout(() => {
+                    revealOnScroll();
+                    setActiveTOC();
+                }, 200);
+            });
+
+            // smooth anchors
+            qsa('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    const id = a.getAttribute('href').slice(1);
+                    const el = document.getElementById(id);
+                    if (el) {
+                        e.preventDefault();
+                        el.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        setTimeout(() => el.setAttribute('tabindex', '-1') || el.focus(), 420);
+                        history.replaceState(null, '', '#' + id);
+                    }
+                });
+            });
+        })();
+
+        // Jadwal toggle & search
+        (function() {
+            const toggle = qs('#toggleJadwal');
+            const tableWrap = qs('#tableContainer');
+            const input = qs('#searchInput');
+            if (toggle && tableWrap) {
+                toggle.addEventListener('click', () => {
+                    const show = tableWrap.style.display !== 'block';
+                    tableWrap.style.display = show ? 'block' : 'none';
+                    toggle.textContent = show ? '❌ Sembunyikan Jadwal' : '📅 Tampilkan Jadwal';
+                    if (show) setTimeout(() => tableWrap.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    }), 120);
+                });
+            }
+            window.filterTable = function() {
+                const q = (input && input.value) ? input.value.trim().toLowerCase() : '';
+                qsa('#jadwalTable tbody tr').forEach(r => {
+                    r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+                });
+            };
+        })();
+
+        // Accessibility focus outlines handling
+        (function() {
+            let usingMouse = false;
+            window.addEventListener('mousedown', () => usingMouse = true);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') usingMouse = false;
+            });
+            document.addEventListener('focusin', (e) => {
+                if (usingMouse && e.target) e.target.style.outline = 'none';
+            });
+        })();
     </script>
 </body>
 
